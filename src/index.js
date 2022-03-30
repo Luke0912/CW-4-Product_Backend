@@ -1,53 +1,46 @@
 const express = require("express");
 
-const mdiamondController = require("./controllers/mdiamond.controller")
+var cors = require('cors')
 
-const menproductController = require("./controllers/menproduct.controller")
+const { register, login, newtoken } = require("./controllers/auth.controller");
 
-const mgoldController = require("./controllers/mgold.controller")
+const userController = require("./controllers/user.controller");
 
-const mplatinumController = require("./controllers/mplatinum.controller")
-
-const wdiamondController = require("./controllers/wdiamond.controller")
-
-const wgoldController = require("./controllers/wgold.controller")
-
-const womenproductController = require("./controllers/womenproduct.controller")
-
-const wplatinumController = require("./controllers/wplatinum.controller")
+const productController = require("./controllers/product.controller");
 
 const app = express();
 
+app.use(cors())
+
 app.use(express.json());
 
-const router = express.Router()
+const router = express.Router();
 
-app.use(router)
+app.use(router);
 
-router.use("/mdiamond",mdiamondController)
+router.use("/register", register);
 
-router.use("/menproduct",menproductController)
+router.use("/login", login);
 
-router.use("/mgold",mgoldController)
+router.use("/user", userController);
 
-router.use("/mplatinum",mplatinumController)
+router.use("/user", userController);
 
-router.use("/wdiamond",wdiamondController)
-
-router.use("/wgold",wgoldController)
-
-router.use("/womenproduct",womenproductController)
-
-router.use("/wplatinum",wplatinumController)
+router.use("/product", productController);
 
 const connect = require("./configs/db");
 
-
-app.listen(5000, async () => {
+const port =  process.env.PORT;
+app.listen(port, async () => {
   try {
     await connect();
-    console.log("listening to port 5000");
+    console.log(`listening to port ${port}`);
   } catch (error) {
     console.log(error);
+    console.log("hello")
   }
 });
+
+
+
+
